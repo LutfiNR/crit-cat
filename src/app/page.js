@@ -1,103 +1,101 @@
-import Image from "next/image";
+"use client";
+import React from 'react';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Link from 'next/link';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { useTheme } from '@mui/material/styles'; // Untuk mengakses theme jika diperlukan
 
-export default function Home() {
+export default function HomePage() {
+  const theme = useTheme(); // Akses objek tema MUI
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Container
+      maxWidth="lg"
+      sx={{
+        py: { xs: theme.spacing(4), md: theme.spacing(8) }, // Padding vertikal responsif
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      {/* Bagian Hero */}
+      <Box
+        textAlign="center"
+        my={4} // Margin atas & bawah standar dari MUI
+        sx={{
+          mb: { xs: theme.spacing(6), md: theme.spacing(10) }, // Margin bawah responsif lebih besar
+        }}
+      >
+        {/* <Fade in={true} timeout={800}> */}
+        <Typography
+          variant="h2"
+          component="h1"
+          gutterBottom
+          sx={{
+            fontWeight: 800, // Mirip font-extrabold
+            color: 'text.primary', // Menggunakan warna teks primer dari tema
+          }}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          Selamat Datang di CRIT CAT
+        </Typography>
+        {/* </Fade> */}
+        {/* <Fade in={true} timeout={800} style={{ transitionDelay: '200ms' }}> */}
+        <Typography
+          variant="h5"
+          component="p"
+          color="text.secondary" // Menggunakan warna teks sekunder dari tema
+          paragraph
+          sx={{
+            maxWidth: '672px', // max-w-2xl
+            mx: 'auto', // mx-auto
+            mb: theme.spacing(4), // mb-8
+          }}
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          <strong>CRIT CAT</strong> adalah platform Computerized Adaptive Testing (CAT) inovatif yang dirancang khusus untuk mengukur dan membantu mengembangkan kemampuan berpikir kritis Anda. Melalui soal berbentuk <i>two-tier multiple choice</i>, kami tidak hanya menilai jawaban akhir Anda, tetapi juga kedalaman pemahaman dan kualitas alasan di baliknya.
+        </Typography>
+        {/* </Fade> */}
+        {/* <Fade in={true} timeout={800} style={{ transitionDelay: '400ms' }}> */}
+        <Typography
+          variant="body1"
+          component="p"
+          color="text.secondary"
+          paragraph
+          sx={{
+            maxWidth: '576px', // max-w-xl
+            mx: 'auto',
+            mb: theme.spacing(5), // mb-10
+          }}
         >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          Bersiaplah untuk sebuah pengalaman tes yang adaptif, menantang, dan memberikan wawasan berharga mengenai proses berpikir Anda!
+        </Typography>
+        {/* </Fade> */}
+        <Box>
+          <Link href="/test" passHref>
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              endIcon={<ArrowForwardIcon />}
+              sx={{
+                px: theme.spacing(5), // Padding horizontal (mirip px-10 Tailwind)
+                py: theme.spacing(1.5), // Padding vertikal (mirip py-3 Tailwind)
+                fontSize: '1.125rem', // text-lg
+                '&:hover': {
+                  transform: 'scale(1.05)',
+                },
+                transition: theme.transitions.create('transform', {
+                  duration: theme.transitions.duration.short,
+                }),
+              }}
+            >
+              Mulai Tes
+            </Button>
+          </Link>
+        </Box>
+      </Box>
+    </Container>
   );
 }
