@@ -16,13 +16,14 @@ import TestHeader from '@/components/test/TestHeader';
 import QuestionDisplay from '@/components/test/QuestionDisplay';
 import TierOptions from '@/components/test/TierOptions';
 import CompletionScreen from '@/components/test/CompletionScreen';
+import TestGuide from '@/components/test/TestGuide';
 
 const TOTAL_TEST_DURATION = 30 * 60; // 30 menit
 const INITIAL_THETA = 0; // Theta awal untuk CAT
 
 export default function TestPage() {
   // State untuk mengontrol alur/fase tes
-  const [testPhase, setTestPhase] = useState('accessCode'); // accessCode | userInfo | testing | finished | error
+  const [testPhase, setTestPhase] = useState('guide'); // accessCode | userInfo | testing | finished | error
   const [errorMessage, setErrorMessage] = useState('');
 
   // State untuk data
@@ -151,19 +152,12 @@ export default function TestPage() {
     
     setResponseHistory(updatedHistory);
     setTheta(newTheta);
-    console.log("Response History:", updatedHistory);
-    console.log("New Theta:", newTheta);
-    console.log("Standard Error:", newSE);
-    console.log("SE Difference:", seDifference);
-    console.log("Probability of Correct Answer:", pCorrect);
-    console.log("Probability of Wrong Answer:", pWrong);
-
 
     if (answeredQuestionIds.size + 1 >= allQuestions.length) {
       handleFinishTest('NO_MORE_QUESTIONS', updatedHistory);
       return;
     }
-    if (seDifference !== null && seDifference <= 0.3) {
+    if (seDifference !== null && seDifference <= 0.03) {
       handleFinishTest('SE_DIFFERENCE', updatedHistory);
       return;
     }
@@ -177,14 +171,12 @@ export default function TestPage() {
       nextQuestion = easierQuestions.length > 0
         ? easierQuestions.reduce((prev, curr) => Math.abs(curr.difficulty - targetDifficulty) < Math.abs(prev.difficulty - targetDifficulty) ? curr : prev)
         : availableQuestions.sort((a, b) => b.difficulty - a.difficulty)[0]; 
-        console.log(easierQuestions);
         // Fallback ke paling sulit dari sisa
     } else { // Cari soal lebih sulit
       const harderQuestions = availableQuestions.filter(q => q.difficulty > 0);
       nextQuestion = harderQuestions.length > 0
         ? harderQuestions.reduce((prev, curr) => Math.abs(curr.difficulty - targetDifficulty) < Math.abs(prev.difficulty - targetDifficulty) ? curr : prev)
         : availableQuestions.sort((a, b) => a.difficulty - b.difficulty)[0]; // Fallback ke paling mudah dari sisa
-        console.log(harderQuestions);
     }
 
     setCurrentQuestion(nextQuestion);
@@ -200,6 +192,8 @@ export default function TestPage() {
         return <AccessCodeForm onCodeValidated={handleCodeValidated} />;
       case 'userInfo':
         return <UserInfoForm onStartTest={handleUserInfoSubmit} />;
+      case 'guide' :
+        return <TestGuide onStartTest={()=>{setTestPhase('accessCode')}} />;
       case 'testing':
         if (isLoading) {
           return <Box sx={{ display: 'flex', justifyContent: 'center', mt: 8 }}><CircularProgress /></Box>;

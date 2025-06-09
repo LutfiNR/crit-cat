@@ -56,22 +56,6 @@ export default function HomePage() {
         >
           <strong>CRIT CAT</strong> adalah platform Computerized Adaptive Testing (CAT) inovatif yang dirancang khusus untuk mengukur dan membantu mengembangkan kemampuan berpikir kritis Anda. Melalui soal berbentuk <i>two-tier multiple choice</i>, kami tidak hanya menilai jawaban akhir Anda, tetapi juga kedalaman pemahaman dan kualitas alasan di baliknya.
         </Typography>
-        {/* </Fade> */}
-        {/* <Fade in={true} timeout={800} style={{ transitionDelay: '400ms' }}> */}
-        <Typography
-          variant="body1"
-          component="p"
-          color="text.secondary"
-          paragraph
-          sx={{
-            maxWidth: '576px', // max-w-xl
-            mx: 'auto',
-            mb: theme.spacing(5), // mb-10
-          }}
-        >
-          Bersiaplah untuk sebuah pengalaman tes yang adaptif, menantang, dan memberikan wawasan berharga mengenai proses berpikir Anda!
-        </Typography>
-        {/* </Fade> */}
         <Box>
           <Link href="/test" passHref>
             <Button

@@ -66,9 +66,14 @@ export default function SubmissionDetailPage() {
                                             secondary={
                                                 <Box component="span" sx={{ display: 'block', mt: 1 }}>
                                                     <Typography component="span" variant="body2">Skor: {item.score}</Typography> |
-                                                    <Typography component="span" variant="body2" sx={{ ml: 1 }}>θ Awal: {item.thetaBefore.toFixed(3)}</Typography> |
-                                                    <Typography component="span" variant="body2" sx={{ ml: 1 }}>θ Akhir: {item.thetaAfter.toFixed(3)}</Typography> |
-                                                    <Typography component="span" variant="body2" sx={{ ml: 1 }}>SE: {item.se.toFixed(3)}</Typography>
+                                                    <Typography component="span" variant="body2" sx={{ ml: 1 }}>Pθ: {item.pCorrect.toFixed(4)}</Typography> |
+                                                    <Typography component="span" variant="body2" sx={{ ml: 1 }}>Qθ: {item.pCorrect.toFixed(4)}</Typography> |
+                                                    <Typography component="span" variant="body2" sx={{ ml: 1 }}>Iθ: {item.informationFunction.toFixed(4)}</Typography> |
+                                                    <Typography component="span" variant="body2" sx={{ ml: 1 }}>θ Awal: {item.thetaBefore.toFixed(4)}</Typography> |
+                                                    <Typography component="span" variant="body2" sx={{ ml: 1 }}>θ Akhir: {item.thetaAfter.toFixed(4)}</Typography> |
+                                                    <Typography component="span" variant="body2" sx={{ ml: 1 }}>SE: {item.se.toFixed(4)}</Typography> |
+                                                    <Typography component="span" variant="body2" sx={{ ml: 1 }}>SE Difference: {item.seDifference?.toFixed(6)}</Typography>
+
                                                 </Box>
                                             }
                                         />

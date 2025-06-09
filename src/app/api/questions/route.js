@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import Question from '@/models/Question';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
 export async function GET() {
   await dbConnect();
@@ -22,7 +24,7 @@ export async function POST(request) {
   const session = await getServerSession(authOptions);
 
   // Jika tidak ada sesi ATAU peran pengguna bukan 'admin'
-  if (!session || session.user?.username !== 'Administrator') {
+  if (!session || session.user?.role !== 'admin') {
     return NextResponse.json(
       { success: false, message: 'Akses ditolak. Anda harus login sebagai admin.' },
       { status: 403 } // 403 Forbidden
@@ -34,6 +36,14 @@ export async function POST(request) {
 
   try {
     const questionData = await request.json();
+    const existingQuestion = await Question.findOne({ id: questionData.id });
+    if (existingQuestion) {
+      // Jika soal dengan ID tersebut sudah ada, kirim error 409 Conflict
+      return NextResponse.json(
+        { success: false, message: `Soal dengan ID "${questionData.id}" sudah ada.` },
+        { status: 409 }
+      );
+    }
     const newQuestion = new Question(questionData);
     await newQuestion.save();
 

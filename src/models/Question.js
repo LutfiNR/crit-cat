@@ -6,7 +6,7 @@ const OptionSchema = new mongoose.Schema({
 });
 
 const QuestionSchema = new mongoose.Schema({
-  id: { type: String, required: true, index: true },
+  id: { type: String, required: true, index: true , unique: true }, // ID unik untuk soal
   image: { type: String, default: null }, // URL gambar soal
   difficulty: { type: Number, required: true }, // Nilai-b
   tier1Text: { type: String, required: true },
