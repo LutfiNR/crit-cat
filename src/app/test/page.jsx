@@ -157,7 +157,7 @@ export default function TestPage() {
       handleFinishTest('NO_MORE_QUESTIONS', updatedHistory);
       return;
     }
-    if (seDifference !== null && seDifference <= 0.03) {
+    if (seDifference !== null && seDifference <= 0.01) {
       handleFinishTest('SE_DIFFERENCE', updatedHistory);
       return;
     }
@@ -170,13 +170,13 @@ export default function TestPage() {
       const easierQuestions = availableQuestions.filter(q => q.difficulty < 0);
       nextQuestion = easierQuestions.length > 0
         ? easierQuestions.reduce((prev, curr) => Math.abs(curr.difficulty - targetDifficulty) < Math.abs(prev.difficulty - targetDifficulty) ? curr : prev)
-        : availableQuestions.sort((a, b) => b.difficulty - a.difficulty)[0]; 
+        : handleFinishTest('NO_MORE_QUESTIONS', updatedHistory); 
         // Fallback ke paling sulit dari sisa
     } else { // Cari soal lebih sulit
       const harderQuestions = availableQuestions.filter(q => q.difficulty > 0);
       nextQuestion = harderQuestions.length > 0
         ? harderQuestions.reduce((prev, curr) => Math.abs(curr.difficulty - targetDifficulty) < Math.abs(prev.difficulty - targetDifficulty) ? curr : prev)
-        : availableQuestions.sort((a, b) => a.difficulty - b.difficulty)[0]; // Fallback ke paling mudah dari sisa
+        : handleFinishTest('NO_MORE_QUESTIONS', updatedHistory); // Fallback ke paling mudah dari sisa
     }
 
     setCurrentQuestion(nextQuestion);
