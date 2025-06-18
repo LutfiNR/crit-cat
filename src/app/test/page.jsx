@@ -93,7 +93,7 @@ export default function TestPage() {
       stoppingRule: rule,
       responseHistory: history,
     };
-    
+
     try {
       await submitTestResults(finalData);
     } catch (err) {
@@ -121,7 +121,7 @@ export default function TestPage() {
 
     const tier1Correct = userAnswers.tier1 === currentQuestion.correctTier1;
     const tier2Correct = userAnswers.tier2 === currentQuestion.correctTier2;
-    
+
     const score = CAT_Engine.calculateScore(tier1Correct, tier2Correct);
     const oldTheta = theta;
     const responsePattern = CAT_Engine.calculateResponsePattern(score);
@@ -131,7 +131,7 @@ export default function TestPage() {
     const informationFunction = CAT_Engine.calculateInformationFunction(pCorrect, pWrong);
     const oldSE = responseHistory.length > 0 ? responseHistory[responseHistory.length - 1].se : 1.0;
     const newSE = CAT_Engine.calculateStandardError(informationFunction);
-    const seDifference = responseHistory.length > 0 ? CAT_Engine.calculateDifferenceSE(oldSE, newSE): null;
+    const seDifference = responseHistory.length > 0 ? CAT_Engine.calculateDifferenceSE(oldSE, newSE) : null;
 
     const newHistoryEntry = {
       questionId: currentQuestion.id,
@@ -149,7 +149,7 @@ export default function TestPage() {
       seDifference,
     };
     const updatedHistory = [...responseHistory, newHistoryEntry];
-    
+
     setResponseHistory(updatedHistory);
     setTheta(newTheta);
 
@@ -157,7 +157,7 @@ export default function TestPage() {
       handleFinishTest('NO_MORE_QUESTIONS', updatedHistory);
       return;
     }
-    if (seDifference !== null && seDifference <= 0.01) {
+    if (seDifference !== null && seDifference < 0.001) {
       handleFinishTest('SE_DIFFERENCE', updatedHistory);
       return;
     }
@@ -169,13 +169,17 @@ export default function TestPage() {
     if (score < 3) { // Cari soal lebih mudah
       const easierQuestions = availableQuestions.filter(q => q.difficulty < 0);
       nextQuestion = easierQuestions.length > 0
-        ? easierQuestions.reduce((prev, curr) => Math.abs(curr.difficulty - targetDifficulty) < Math.abs(prev.difficulty - targetDifficulty) ? curr : prev)
-        : handleFinishTest('NO_MORE_QUESTIONS', updatedHistory); 
-        // Fallback ke paling sulit dari sisa
+        ? nextQuestion = easierQuestions.reduce((prev, curr) =>
+          Math.abs(curr.difficulty) < Math.abs(prev.difficulty) ? curr : prev
+        )
+        : handleFinishTest('NO_MORE_QUESTIONS', updatedHistory);
+      // Fallback ke paling sulit dari sisa
     } else { // Cari soal lebih sulit
       const harderQuestions = availableQuestions.filter(q => q.difficulty > 0);
       nextQuestion = harderQuestions.length > 0
-        ? harderQuestions.reduce((prev, curr) => Math.abs(curr.difficulty - targetDifficulty) < Math.abs(prev.difficulty - targetDifficulty) ? curr : prev)
+        ? nextQuestion = harderQuestions.reduce((prev, curr) =>
+          Math.abs(curr.difficulty) < Math.abs(prev.difficulty) ? curr : prev
+        )
         : handleFinishTest('NO_MORE_QUESTIONS', updatedHistory); // Fallback ke paling mudah dari sisa
     }
 
@@ -192,8 +196,8 @@ export default function TestPage() {
         return <AccessCodeForm onCodeValidated={handleCodeValidated} />;
       case 'userInfo':
         return <UserInfoForm onStartTest={handleUserInfoSubmit} />;
-      case 'guide' :
-        return <TestGuide onStartTest={()=>{setTestPhase('accessCode')}} />;
+      case 'guide':
+        return <TestGuide onStartTest={() => { setTestPhase('accessCode') }} />;
       case 'testing':
         if (isLoading) {
           return <Box sx={{ display: 'flex', justifyContent: 'center', mt: 8 }}><CircularProgress /></Box>;
