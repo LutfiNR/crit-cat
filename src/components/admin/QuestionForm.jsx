@@ -133,7 +133,7 @@ export default function QuestionForm({ initialData = null }) {
         <TextField name="image" label="URL Gambar (Opsional)" value={formData.image} onChange={handleChange} fullWidth />
                 {formData.image && (
                   <Box sx={{ mb: 2, display: 'flex', justifyContent: 'center' }}>
-                    <img src={formData.image} alt={`Soal ${formData.image}`} style={{ maxWidth: '100%', height: 'auto', borderRadius: 4 }} />
+                    <img src={`/${formData.image}`} alt={`Soal ${formData.image}`} style={{ maxWidth: '100%', height: 'auto', borderRadius: 4 }} />
                   </Box>
                 )}
         <Divider sx={{ my: 2 }} />
