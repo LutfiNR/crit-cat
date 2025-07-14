@@ -164,7 +164,6 @@ export default function TestPage() {
 
     const availableQuestions = allQuestions.filter(q => !answeredQuestionIds.has(q.id) && q.id !== currentQuestion.id);
     let nextQuestion;
-    const targetDifficulty = newTheta; // Target ideal adalah theta saat ini
 
     if (score < 3) { // Cari soal lebih mudah
       const easierQuestions = availableQuestions.filter(q => q.difficulty < 0);

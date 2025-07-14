@@ -131,11 +131,15 @@ export default function QuestionForm({ initialData = null }) {
         />
         <TextField name="difficulty" label="Tingkat Kesulitan (b)" type="number" inputProps={{ step: "0.01" }} value={formData.difficulty} onChange={handleChange} fullWidth required />
         <TextField name="image" label="URL Gambar (Opsional)" value={formData.image} onChange={handleChange} fullWidth />
-        
+                {formData.image && (
+                  <Box sx={{ mb: 2, display: 'flex', justifyContent: 'center' }}>
+                    <img src={formData.image} alt={`Soal ${formData.image}`} style={{ maxWidth: '100%', height: 'auto', borderRadius: 4 }} />
+                  </Box>
+                )}
         <Divider sx={{ my: 2 }} />
 
         <Typography variant="h6">Tier 1</Typography>
-        <TextField name="tier1Text" label="Teks Soal Tier 1" multiline rows={4} value={formData.tier1Text} onChange={handleChange} fullWidth required />
+        <TextField name="tier1Text" label="Teks Soal Tier 1" multiline rows={10} value={formData.tier1Text} onChange={handleChange} fullWidth required />
         
         <Typography variant="subtitle1" sx={{ mt: 2 }}>Opsi Jawaban Tier 1</Typography>
         {formData.tier1Options.map((opt, index) => (
